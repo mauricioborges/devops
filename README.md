@@ -1,4 +1,4 @@
 # DEVOPS
 ======
 
-devops stuff
+Experiments on Devops, scripting and so on...
