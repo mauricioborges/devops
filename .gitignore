@@ -1,1 +1,6 @@
-.vagrant
+**/.vagrant
+*.rpm
+*.zip
+*.bin
+*.jar
+*.log
