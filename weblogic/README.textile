@@ -1,0 +1,15 @@
+h1. Scripts weblogic
+
+Scripts para configuração de ambiente weblogic.
+
+Para testar:
+* instanciar a VM weblogic
+* instalar o weblogic
+
+para rodar: 
+
+java org.python.util.jython <script>
+
+h1. REF!
+
+* Server Lifecycle
