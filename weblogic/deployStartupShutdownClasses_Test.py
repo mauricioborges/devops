@@ -9,7 +9,7 @@ class TestApplyStartupClass(unittest.TestCase):
 	def setUp(self):
 		raise 'not implemented'
 	def test_applyInexistentStartupClassOffline(self):
-		raise 'not implemented'
+		wl.connect(raise 'not implemented'
 	def test_applyInexistentStartupClassOnline(self):
 		raise 'not implemented'
 	def test_applyExistentStartupClassOffline(self):
@@ -30,13 +30,19 @@ class TestStartupClassComparable(unittest.TestCase):
 		wl.createDomain(templateFile,self.domainDir,self.username,self.password)
 		wl.startServer(domainDir=self.domainDir,serverLog='/dev/null',username=self.username,password=self.password)
 		wl.connect(self.username,self.password,'t3://localhost:7001')
-	
+		domainConfig=wl.domainConfig()
+		wl.edit()
+		editor=wl.startEdit()
+		editor.createStartupClass('teste-1')
+		editor.createStartupClass('teste-2')
 	def test_compareEqual(self):
-		
-		raise 'not implemented'
+		expectedStartupClasses=["teste-1","teste-2"]
+		print self.domainConfig.getStartupClasses()
+		self.assertEqual(self.domainConfig.getStartupClasses(),expectedStartupClasses)
 
 #	def test_compareDifferent(self):
 #	def test_compareOneIsNull(self):
+#	def test_withProductionMode(self):
 
 	def tearDown(self):
 		wl.shutdown()
