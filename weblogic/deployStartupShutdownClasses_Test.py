@@ -2,6 +2,8 @@
 import wl
 import unittest
 import time
+import shutil
+
 """
 class TestApplyStartupClass(unittest.TestCase):
 	def setUp(self):
@@ -26,7 +28,7 @@ class TestStartupClassComparable(unittest.TestCase):
 		self.password='aaahL00k@AllDLon3lyPPl'
 		print "Creating domain "+self.domainDir
 		wl.createDomain(templateFile,self.domainDir,self.username,self.password)
-		wl.startServer(domainDir=self.domainDir)
+		wl.startServer(domainDir=self.domainDir,serverLog='/dev/null',username=self.username,password=self.password)
 
 	def test_compareEqual(self):
 		raise 'not implemented'
@@ -35,7 +37,11 @@ class TestStartupClassComparable(unittest.TestCase):
 #	def test_compareOneIsNull(self):
 
 	def tearDown(self):
-		wl.shutdown(force='true')
+		wl.readDomain(self.domainDir)
+		wl.connect(self.username,self.password,'t3://localhost:7001')
+		wl.shutdown()
+#		wl.shutdown(name='AdminServer',force='true')
+		wl.closeDomain()
 		shutil.rmtree(self.domainDir)
 """
 class TestStartupClassesAbstraction(unittest.TestCase):
