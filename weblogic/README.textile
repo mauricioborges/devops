@@ -10,6 +10,12 @@ para rodar:
 
 java org.python.util.jython <script>
 
+h1. Change management
+
+http://docs.oracle.com/cd/E23943_01/web.1111/e13716/changes.htm#DOMCF172
+
 h1. REF!
 
 * Server Lifecycle
+
+
