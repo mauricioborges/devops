@@ -1,10 +1,12 @@
-**/.vagrant
-**/*.rpm
-**/*.zip
-**/*.bin
-**/*.jar
-**/*.log
-**/*.$py.class
+.vagrant
+*.rpm
+*.zip
+*.bin
+*.jar
+*.war
+*.ear
+*.log
+*$py.class
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
