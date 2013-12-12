@@ -10,6 +10,8 @@ class Deployer:
   def __init__(self,connection):
     self.connection=connection
 
+  def connect(self, serverURL,userConfigFile,userKeyFile):
+    print consoleUtils.paintHeader('Connecting to '+serverURL+' with user Config File ' + userConfigFile)
   def deploy(artifact,targets,domain):
     raise paintFail('not implemented yet!')
 
