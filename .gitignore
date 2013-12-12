@@ -1,6 +1,7 @@
 **/.vagrant
-*.rpm
-*.zip
-*.bin
-*.jar
-*.log
+**/*.rpm
+**/*.zip
+**/*.bin
+**/*.jar
+**/*.log
+**/*.$py.class
