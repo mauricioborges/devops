@@ -15,15 +15,28 @@ def getStatusApplication():
 class deployConnections_Test(unittest.TestCase):
 
   def test_deployConnNone(self):
-    unittest.assertEqual(Deployer().connect(None).connectionStatus(),'DISCONNECTED')
+    #Context Management to assertRaises is available only in Python 2.7+
+    #self.assertRaises(deploytools.WrongParameterException,Deployer().connect,(None,None,None))
+    try:
+      Deployer().connect,(None,None,None)
+    except e:
+      self.assertEqual(deploytools.WrongParameterException,e.type)
   def test_connection_valid(self):
-    unittest.assertEqual(Deployer().connect('t3://localhost:7001','user.config','user.key').connectionStatus(),deployTools.ConnectionStatuses.CONNECTED)
+    deployer=Deployer()
+    deployer.connect('t3://localhost:7001','user.config','user.key')
+    self.assertEqual(deployer.isConnected(),True)
   def test_connection_invalid_url(self):
-    unittest.assertEqual(Deployer().connect('t3://someserveranywhere:7002','user.config','user.key').connectionStatus(),deployTools.ConnectionStatuses.DISCONNECTED)
+    deployer=Deployer()
+    deployer.connect('t3://someserveranywhere:7002','user.config','user.key')
+    self.assertEqual(deployer.isConnected(),False)
   def test_connection_invalid_configFile(self):
-    unittest.assertEqual(Deployer().connect('t3://localhost:7001','user.config.invalid','user.key').connectionStatus(),deployTools.ConnectionStatuses.DISCONNECTED)
+    deployer=Deployer()
+    deployer.connect('t3://localhost:7001','user.config.invalid','user.key')
+    self.assertEqual(deployer.isConnected(),False)
   def test_connection_invalid_keyFile(self):
-    unittest.assertEqual(Deployer().connect('t3://localhost:7001','user.config','user.key.invalid').connectionStatus(),deployTools.ConnectionStatuses.DISCONNECTED)
+    deployer=Deployer()
+    deployer.connect('t3://localhost:7001','user.config','user.key.invalid')
+    self.assertEqual(deployer.isConnected(),False)
 
 
 #class deployEditMode_Test(unittest.TestCase):
