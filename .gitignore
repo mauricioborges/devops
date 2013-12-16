@@ -7,6 +7,19 @@
 *.ear
 *.log
 *$py.class
+.consoleUtils.py.swp
+.deploy_test.py.swp
+.deploytools.py.swp
+DUMP.textile
+afraid.py
+nohup.out
+user.config
+user.config.invalid
+user.key
+user.key.invalid
+
+
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
