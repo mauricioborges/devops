@@ -9,7 +9,7 @@ targets=['server1']
 
 
 def getStatusApplication():
-  raise(consoleUtils.paintFail('not implemented yet'))
+  raise(consoleUtils.paintAsFail('not implemented yet'))
 
 
 class deployConnections_Test(unittest.TestCase):
