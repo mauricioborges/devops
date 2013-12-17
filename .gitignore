@@ -13,11 +13,8 @@
 DUMP.textile
 afraid.py
 nohup.out
-user.config
-user.config.invalid
-user.key
-user.key.invalid
-
+user.config*
+user.key*
 
 
 

@@ -3,7 +3,9 @@ import consoleUtils
 from java.io import File
 from java.io import FileInputStream
 from java.util import Properties
+from java.lang import NullPointerException
 import os
+from wl import WLSTException
 
 
 #TODO: load files from SVN
@@ -11,6 +13,9 @@ import os
 #TODO: load encrypted keys from files
 
 class WrongParameterException(Exception):
+  pass
+ 
+class FailedConnectionException(Exception):
   pass
 
 class Deployer:
@@ -20,6 +25,7 @@ class Deployer:
   _userKeyFile=''
   _wl=None
   def connect(self, serverURL,userConfigFile,userKeyFile):
+    self._wl=wl
     self._serverURL=serverURL
     self._userConfigFile=userConfigFile
     self._userKeyFile=userKeyFile
@@ -28,27 +34,26 @@ class Deployer:
       raise WrongParameterException
     print consoleUtils.paintAsHeader('Trying to connect to '+serverURL+' with user config file ' + userConfigFile)
 
-    if self._areUserFilesValid():
-      print consoleUtils.paintAsFail('Wrong connection parameters!')
+    if not self._areUserFilesValid():
+      print consoleUtils.paintAsFail('Check your user config files, there is something wrong with them...')
       raise WrongParameterException
 
-
-    wl.loadProperties(self._userConfigFile)
-    wl.connect(userConfigFile=self._userConfigFile, userKeyFile=self._userKeyFile, url=self._serverURL, timeout=60000)
-    self._wl=wl
+    try:
+      wl.connect(userConfigFile=self._userConfigFile, userKeyFile=self._userKeyFile, url=self._serverURL, timeout=60000)
+    except WLSTException, e:
+      wl.dumpStack()
+      raise FailedConnectionException
 
   def deploy(artifact,targets,domain):
     raise paintAsFail('not implemented yet!')
   
+  #todo: test this method
   def isConnected(self):
     if self._wl.cmo:
       return True
     return False
 
   def _canConnect(self):
-    #print consoleUtils.paintAsOkBlue(self._serverURL)
-    #print consoleUtils.paintAsOkBlue(self._userConfigFile)
-    #print consoleUtils.paintAsOkBlue(self._userKeyFile)
     if self._serverURL and self._userConfigFile and self._userKeyFile:
       return True
     return False
@@ -59,15 +64,18 @@ class Deployer:
       else: 
         return False
 
-
+#TODO: use different exceptions?
   def _areUserFilesValid(self):
     if not (self._userConfigFile and self._userKeyFile):
       return False
     if not (self._is_non_zero_file(self._userConfigFile) and self._is_non_zero_file(self._userKeyFile)):
       return False
-    inStream=FileInputStream(self._userConfigFile)
-    userConfigs=Properties()
-    userConfigs=Properties.load(inStream)
+    try:
+      inStream=FileInputStream(self._userConfigFile)
+      userConfigs=Properties()
+      userConfigs.load(inStream)
+    except NullPointerException:
+      return False
     if not (userConfigs.getProperty('weblogic.management.username') and userConfigs.getProperty('weblogic.management.password')):
       return False
     return True
