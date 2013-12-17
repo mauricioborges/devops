@@ -1,7 +1,9 @@
 import wl
 import consoleUtils
-import java.util as util
-import java.io as javaio
+from java.io import File
+from java.io import FileInputStream
+from java.util import Properties
+import os
 
 
 #TODO: load files from SVN
@@ -51,9 +53,24 @@ class Deployer:
       return True
     return False
 
-  def _areUserFilesValid():
-    if self._userConfigFile and self._userKeyFile:
+  def _is_non_zero_file(self,fpath):  
+      if os.path.isfile(fpath) and os.path.getsize(fpath) > 0:
+        return True
+      else: 
+        return False
 
+
+  def _areUserFilesValid(self):
+    if not (self._userConfigFile and self._userKeyFile):
+      return False
+    if not (self._is_non_zero_file(self._userConfigFile) and self._is_non_zero_file(self._userKeyFile)):
+      return False
+    inStream=FileInputStream(self._userConfigFile)
+    userConfigs=Properties()
+    userConfigs=Properties.load(inStream)
+    if not (userConfigs.getProperty('weblogic.management.username') and userConfigs.getProperty('weblogic.management.password')):
+      return False
+    return True
 
 
 #if __name__ == "__main__" or __name == "main":
