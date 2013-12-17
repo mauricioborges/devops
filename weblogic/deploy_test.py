@@ -38,6 +38,25 @@ class deployConnections_Test(unittest.TestCase):
     deployer.connect('t3://localhost:7001','user.config','user.key.invalid')
     self.assertEqual(deployer.isConnected(),False)
 
+class UserConfigAndKeyFile_Test(unittest.TestCase):
+  def test_userConfigOkAndUserKeyOk(self):
+    deployer=Deployer()
+    deployer._userConfigFile='user.config'
+    deployer._userKeyFile='user.key'
+    self.assertEqual(deployer._areUserFilesValid(),True)
+  def test_userConfigEmptyAndUserKeyOk(self):
+    deployer=Deployer()
+    self.assertEqual(deployer._areUserFilesValid(),False)
+  def test_userConfigWrongAndUserKeyOk(self):
+    deployer=Deployer()
+    self.assertEqual(deployer._areUserFilesValid(),False)
+  def test_userConfigOkAndUserKeyEmpty(self):
+    deployer=Deployer()
+    self.assertEqual(deployer._areUserFilesValid(),False)
+  def test_userConfigWrongAndUserKeyWrong(self):
+    deployer=Deployer()
+    self.assertEqual(deployer._areUserFilesValid(),False)
+
 
 #class deployEditMode_Test(unittest.TestCase):
 #  def
