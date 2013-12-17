@@ -16,7 +16,8 @@ h1. REF!
 
 http://docs.oracle.com/cd/E23943_01/web.1111/e13716/changes.htm#DOMCF172
 http://docs.python.org/2/reference/datamodel.html#customization
-
+www.thoughtworks.com/insights/blog/implementando-entrega-continua
+http://mileszs.com/vim-screen-and-the-awesomest-ide-ever/
 
 * Server Lifecycle
 
