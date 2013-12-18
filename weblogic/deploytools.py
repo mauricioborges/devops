@@ -18,6 +18,9 @@ class WrongParameterException(Exception):
 class FailedConnectionException(Exception):
   pass
 
+class NotConnectedException(Exception):
+  pass
+
 class Deployer:
 
   _serverURL=''
