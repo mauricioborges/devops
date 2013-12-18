@@ -17,7 +17,7 @@ class bcolors:
     self.ENDC = ''
   
 def __endText(message):
-  return message + bcolors.ENDC
+  return '\n'+message + bcolors.ENDC
 
 def paintAsHeader(message):
   return __endText(bcolors.HEADER + message)
