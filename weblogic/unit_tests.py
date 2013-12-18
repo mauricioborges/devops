@@ -3,6 +3,7 @@ import unittest
 import deploytools
 import consoleUtils
 from deploytools import Deployer
+import os
 
 artifact=['example.war']
 targets=['server1']
@@ -12,15 +13,19 @@ def getStatusApplication():
   raise(consoleUtils.paintAsFail('not implemented yet'))
 
 
+
+
 class deployConnections_Test(unittest.TestCase):
 
   def test_deployConnNone(self):
     #Context Management to assertRaises is available only in Python 2.7+
     #self.assertRaises(deploytools.WrongParameterException,Deployer().connect,(None,None,None))
     try:
-      Deployer().connect,(None,None,None)
-    except e:
-      self.assertEqual(deploytools.WrongParameterExceptionException.__name__,e.__class__.__name__)
+      Deployer().connect(None,None,None)
+    except Exception, e:
+      #only in 2.7 
+      #self.assertIsInstance(e,deploytools.WrongParameterException)
+      self.assertEqual(isinstance(e,deploytools.WrongParameterException), True)
   def test_connection_valid(self):
     deployer=Deployer()
     deployer.connect('t3://localhost:7001','user.config','user.key')
@@ -31,20 +36,20 @@ class deployConnections_Test(unittest.TestCase):
       deployer.connect('t3://someserveranywhere:7002','user.config','user.key')
     except Exception, e:
       self.assertEqual(deployer.isConnected(),False)
-      self.assertEqual(deploytools.FailedConnectionException.__name__,e.__class__.__name__)
+      self.assertEqual(isinstance(e,deploytools.FailedConnectionException), True)
   def test_connection_invalid_configFile(self):
     try:
       deployer=Deployer()
       deployer.connect('t3://localhost:7001','user.config.invalid','user.key')
-    except Exception, exception:
-      self.assertEqual(deploytools.WrongParameterException.__name__,exception.__class__.__name__)
+    except Exception, e:
+      self.assertEqual(isinstance(e,deploytools.WrongParameterException), True)
 
   def test_connection_invalid_keyFile(self):
     try:
       deployer=Deployer()
       deployer.connect('t3://localhost:7001','user.config','user.key.invalid')
-    except Exception, exception:
-      self.assertEqual(deploytools.FailedConnectionException.__name__,exception.__class__.__name__)
+    except Exception, e:
+      self.assertEqual(isinstance(e,deploytools.FailedConnectionException), True)
 
 class UserConfigAndKeyFile_Test(unittest.TestCase):
   def test_userConfigOkAndUserKeyOk(self):
@@ -67,6 +72,15 @@ class UserConfigAndKeyFile_Test(unittest.TestCase):
     deployer._userConfigFile='user.config'
     deployer._userKeyFile='user.key.empty'
     self.assertEqual(deployer._areUserFilesValid(),False)
+  def test_userConfigMissingAndUserKeyOk(self):
+    inexistentFile='user.config.idontexist'
+    if not os.path.isfile(inexistentFile):
+      deployer=Deployer()
+      deployer._userConfigFile=inexistentFile
+      deployer._userKeyFile='user.key'
+      self.assertEqual(deployer._areUserFilesValid(),False)
+    else:
+      raise "the file "+inexistentFile + " should not exist!"
   def test_userConfigWrongAndUserKeyWrong(self):
     deployer=Deployer()
     deployer._userConfigFile='user.config.invalid'
