@@ -5,6 +5,12 @@ Scripts para configuração de ambiente weblogic.
 Para testar:
 * instanciar a VM weblogic
 * instalar o weblogic
+* configurar ListenAddress
+  edit()
+  startEdit()
+  cd('/Servers/AdminServer')
+  set('ListenAddress','0.0.0.0')
+* parar iptables
 
 para rodar: 
 
@@ -14,6 +20,7 @@ h1. Change management
 
 h1. REF!
 
+http://www.openvim.com/tutorial.html
 http://docs.oracle.com/cd/E23943_01/web.1111/e13716/changes.htm#DOMCF172
 http://docs.python.org/2/reference/datamodel.html#customization
 www.thoughtworks.com/insights/blog/implementando-entrega-continua

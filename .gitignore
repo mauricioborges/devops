@@ -7,9 +7,7 @@
 *.ear
 *.log
 *$py.class
-.consoleUtils.py.swp
-.deploy_test.py.swp
-.deploytools.py.swp
+.*.py.swp
 DUMP.textile
 afraid.py
 nohup.out
