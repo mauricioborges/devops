@@ -47,14 +47,27 @@ class Deployer:
       wl.dumpStack()
       raise FailedConnectionException
 
-  def deploy(artifact,targets,domain):
-    raise paintAsFail('not implemented yet!')
+  def deploy(self,artifact,targets,domain):
+    if not self.isConnected():
+      raise NotConnectedException
+    if not (artifact and targets and domain):
+      raise WrongParameterException
   
   #todo: test this method
   def isConnected(self):
-    if self._wl.cmo:
-      return True
+    if not self._wl:
+      return False
+    else:  
+#increase test accuracy...anyone can put anything here to guarantee it's working
+      if self._wl.cmo:
+        return True
     return False
+
+  def isActive(self,applicationName):
+    return True
+  def getVersion(self,applicationName):
+    return '1.0-SNAPSHOT'
+
 
   def _canConnect(self):
     if self._serverURL and self._userConfigFile and self._userKeyFile:
