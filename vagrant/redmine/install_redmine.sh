@@ -45,7 +45,7 @@ rm ./$BITNAMI_PACKAGE
 
 apt-get -y install make unzip mercurial
 cd $install_dir
-./use_redmine
+. ./use_redmine
 
 #INSTALL REDMINE_BACKLOGS http://www.redminebacklogs.net/en/installation.html
 
@@ -82,6 +82,7 @@ $install_dir/ctlscript.sh restart
 
 #INSTALL REDMINE PIPELINE PLUGIN
 cd $plugins_dir
+#TODO: test git clone, if not working, download zip
 git clone https://github.com/GitDries/redmine_pipeline_plugin
 
 exit
