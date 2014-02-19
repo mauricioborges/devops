@@ -47,6 +47,8 @@ apt-get -y install make unzip mercurial
 cd $install_dir
 . ./use_redmine
 
+export GIT_SSL_NO_VERIFY=true
+
 #INSTALL REDMINE_BACKLOGS http://www.redminebacklogs.net/en/installation.html
 
 backlogs_tag=v1.0.6
@@ -58,10 +60,10 @@ gem install holidays --version 1.0.3
 gem install holidays
 
 cd $plugins_dir
-git clone git://github.com/backlogs/redmine_backlogs.git
+git clone https://github.com/backlogs/redmine_backlogs.git
 cd redmine_backlogs
 git checkout v1.0.6
-bundle install 
+bundle install --without development test 
 
 cd $redmine_htdocs_dir
 RAILS_ENV=production
@@ -83,7 +85,7 @@ $install_dir/ctlscript.sh restart
 #INSTALL REDMINE PIPELINE PLUGIN
 cd $plugins_dir
 #TODO: test git clone, if not working, download zip
-git clone https://github.com/GitDries/redmine_pipeline_plugin
+git clone https://github.com/GitDries/redmine_pipeline_plugin 
 
 exit
 
@@ -91,7 +93,7 @@ exit
 
 cd $redmine_htdocs_dir
 plugin_charts_dir=plugins/redmine_charts2
-git clone git://github.com/pharmazone/redmine_charts2 $plugin_charts_dir
+git clone https://github.com/pharmazone/redmine_charts2 $plugin_charts_dir 
 cd $plugin_charts_dir
 git checkout redmine21
 

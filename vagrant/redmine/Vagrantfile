@@ -8,4 +8,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :private_network, type: :dhcp, :netmask => "255.255.0.0"
   config.vm.network "forwarded_port", guest:9150, host:9150
   config.vm.provision "shell", path: "install_redmine.sh"
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 1024
+  end
 end
